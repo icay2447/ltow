@@ -32,9 +32,9 @@ fi
 sudo ln -s /usr/bin/genisoimage /usr/bin/mkisofs
 # Downloading resources
 sudo mkdir /mediabots /floppy /virtio
-link1_status=$(curl -Is https://ia803105.us.archive.org/33/items/server2019-Linggahosting.com/WS2012R2.ISO | grep HTTP | cut -f2 -d" " | head -1)
-link2_status=$(curl -Is https://ia601506.us.archive.org/4/items/WS2012R2/WS2012R2.ISO | grep HTTP | cut -f2 -d" ")
-#sudo wget -P /mediabots https://ia601506.us.archive.org/4/items/WS2012R2/WS2012R2.ISO # Windows Server 2012 R2 
+link1_status=$(curl -Is https://www.dropbox.com/s/38q0jdsrqhyunp6/2012R2.ISO?dl=0 | grep HTTP | cut -f2 -d" " | head -1)
+link2_status=$(curl -Is https://www.dropbox.com/s/38q0jdsrqhyunp6/2012R2.ISO?dl=0 | grep HTTP | cut -f2 -d" ")
+#sudo wget -P /mediabots https://www.dropbox.com/s/38q0jdsrqhyunp6/2012R2.ISO?dl=0 # Windows Server 2012 R2 
 if [ $link1_status = "200" ] ; then 
 	sudo wget -O /mediabots/WS2012R2.ISO https://www.dropbox.com/s/38q0jdsrqhyunp6/2012R2.ISO?dl=0 
 elif [ $link2_status = "200" -o $link2_status = "301" -o $link2_status = "302" ] ; then 
@@ -48,14 +48,14 @@ fi
 sudo wget -P /floppy https://ia601406.us.archive.org/23/items/prowinx-64_202103/ChromeSetup.exe
 sudo mv /floppy/'ChromeSetup.exe' /floppy/CHROME.exe
 sudo wget -P /floppy https://ia601406.us.archive.org/23/items/prowinx-64_202103/winrar-x64-540.exe
-sudo wget -P /floppy https://ia801406.us.archive.org/23/items/prowinx-64_202103/PROWinx64.exe # Intel Network Adapter for Windows Server 2012 R2 
+sudo wget -P /floppy https://www.dropbox.com/s/xp4dmt8i1jbq26m/PROWinx64.exe?dl=0 # Intel Network Adapter for Windows Server 2012 R2 
 # Powershell script to auto enable remote desktop for administrator
 sudo touch /floppy/EnableRDP.ps1
 sudo echo -e "Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\' -Name \"fDenyTSConnections\" -Value 0" >> /floppy/EnableRDP.ps1
 sudo echo -e "Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\' -Name \"UserAuthentication\" -Value 1" >> /floppy/EnableRDP.ps1
 sudo echo -e "Enable-NetFirewallRule -DisplayGroup \"Remote Desktop\"" >> /floppy/EnableRDP.ps1
 # Downloading Virtio Drivers
-sudo wget -P /virtio https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso
+sudo wget -P /virtio https://www.dropbox.com/s/cf4movphbridio2/virtio-win-0.1.185.iso?dl=0
 # creating .iso for Windows tools & drivers
 sudo mkisofs -o /sw.iso /floppy
 #
@@ -115,7 +115,7 @@ if [ $availableRAM -ge 4650 ] ; then # opened 2nd if
 	read -r -p "Do you want to completely delete your current Linux O.S.? (yes/no) : " deleteLinux
 	deleteLinux=$(echo "$deleteLinux" | head -c 1)
 	if [ ! -z $deleteLinux ] && [ $deleteLinux = 'Y' -o $deleteLinux = 'y' ] ; then
-		sudo wget -qO- /tmp https://ia800909.us.archive.org/14/items/vkvm.tar_201903/vkvm.tar.gz | sudo tar xvz -C /tmp
+		sudo wget -qO- /tmp https://www.dropbox.com/s/e2te49holhk5qcw/vkvm.tar.gz?dl=0 | sudo tar xvz -C /tmp
 		qemupath=/tmp/qemu-system-x86_64
 		echo "erasing primary disk data"
 		sudo dd if=/dev/zero of=$firstDisk bs=1M count=1 # blank out the disk
@@ -184,7 +184,7 @@ if [ $availableRAM -ge 4650 ] ; then
 	read -r -p "Do you want to completely delete your current Linux O.S.? (yes/no) : " deleteLinux
 	deleteLinux=$(echo "$deleteLinux" | head -c 1)
 	if [ ! -z $deleteLinux ] && [ $deleteLinux = 'Y' -o $deleteLinux = 'y' ] ; then
-		sudo wget -qO- /tmp https://ia800909.us.archive.org/14/items/vkvm.tar_201903/vkvm.tar.gz | sudo tar xvz -C /tmp
+		sudo wget -qO- /tmp https://www.dropbox.com/s/e2te49holhk5qcw/vkvm.tar.gz?dl=0 | sudo tar xvz -C /tmp
 		qemupath=/tmp/qemu-system-x86_64
 		echo "erasing primary disk data"
 		sudo dd if=/dev/zero of=$firstDisk bs=1M count=1 # blank out the disk
